@@ -1,15 +1,9 @@
 import { useContract, useContractRead } from '@thirdweb-dev/react'
 import { useEffect } from 'react'
 import { Card, CardHeader, CardContent } from '@/components/ui/card'
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from '@/components/ui/table'
-import { Badge } from '@/components/ui/badge'
+import { FaCopy } from 'react-icons/fa'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
 const Home = () => {
   const { contract } = useContract('0x42571ca6E3994629061de9e645bB722d9131c4a6')
@@ -17,88 +11,99 @@ const Home = () => {
 
   return (
     <main className='container mx-auto px-4 py-8 sm:px-6 lg:px-8'>
-      <h1 className='text-3xl font-bold mb-8'>Dashboard</h1>
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
-        <Card>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center'>
+        <Card className=''>
           <CardHeader>
-            <h2 className='text-xl font-bold'>Balance</h2>
+            <h2 className='text-xl font-bold'>My Address</h2>
           </CardHeader>
-          <CardContent>
-            <div className='text-4xl font-bold'>$12,345.67</div>
+          <CardContent className=''>
+            <div className='text-sm font-semibold break-all'>
+              0x35D62c3788c3c2B0a5cF2A009CBB8d287f4FfB55
+            </div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader>
-            <h2 className='text-xl font-bold'>Total Deposits</h2>
+            <h2 className='text-xl font-bold'>My Refferal link</h2>
           </CardHeader>
-          <CardContent>
-            <div className='text-4xl font-bold'>$45,678.90</div>
+          <CardContent className='flex gap-2 text-wrap items-center justify-center'>
+            <div className='text-sm font-semibold break-all'>
+              https://bullrun.com?ref=abch6789
+            </div>
+            <FaCopy className='h-4' />
           </CardContent>
         </Card>
         <Card>
           <CardHeader>
-            <h2 className='text-xl font-bold'>Total Withdrawals</h2>
+            <h2 className='text-xl font-bold'>Total Investments</h2>
           </CardHeader>
           <CardContent>
-            <div className='text-4xl font-bold'>$9,876.54</div>
+            <div className='text-xl font-semibold'>9</div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader>
-            <h2 className='text-xl font-bold'>Pending Transactions</h2>
+            <h2 className='text-xl font-bold'>Total Team</h2>
           </CardHeader>
           <CardContent>
-            <div className='text-4xl font-bold'>3</div>
+            <div className='text-xl font-semibold'>3</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <h2 className='text-xl font-bold'>Reward</h2>
+          </CardHeader>
+          <CardContent>
+            <div className='text-xl font-semibold'>0.00</div>
+            <Button className='font-dance mt-2'>Claim</Button>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <h2 className='text-xl font-bold'>Direct Bonus</h2>
+          </CardHeader>
+          <CardContent>
+            <div className='text-xl font-semibold'>5.63</div>
+            <Button className='font-dance mt-2'>View Details</Button>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <h2 className='text-xl font-bold'>Level Bonus</h2>
+          </CardHeader>
+          <CardContent>
+            <div className='text-xl font-semibold'>0.00</div>
+            <Button className='font-dance mt-2'>Level Claim</Button>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <h2 className='text-xl font-bold'>Champion Circle</h2>
+          </CardHeader>
+          <CardContent>
+            <div className='text-xl font-semibold'>5.63</div>
+            <Button className='font-dance mt-2'>Champion Claim</Button>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <h2 className='text-xl font-bold'>Capital Profit</h2>
+          </CardHeader>
+          <CardContent>
+            <div className='text-xl font-semibold'>5.63</div>
+            <Button className='font-dance mt-2'>Capital Claim</Button>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <h2 className='text-xl font-bold'>ReDeposit</h2>
+          </CardHeader>
+          <CardContent>
+            <Input placeholder='Re-Deposit Amount' />
+            <Button className='font-dance mt-2'>ReDeposit</Button>
           </CardContent>
         </Card>
       </div>
-      {/* <div className='mt-8'>
-         <h2 className='text-2xl font-bold mb-4'>Recent Transactions</h2>
-         <Table>
-           <TableHeader>
-             <TableRow>
-               <TableHead>Date</TableHead>
-               <TableHead>Type</TableHead>
-               <TableHead>Amount</TableHead>
-               <TableHead>Status</TableHead>
-             </TableRow>
-           </TableHeader>
-           <TableBody>
-             <TableRow>
-               <TableCell>2023-04-01</TableCell>
-               <TableCell>Deposit</TableCell>
-               <TableCell>$1,000.00</TableCell>
-               <TableCell>
-                 <Badge variant='secondary'>Completed</Badge>
-               </TableCell>
-             </TableRow>
-             <TableRow>
-               <TableCell>2023-03-28</TableCell>
-               <TableCell>Withdrawal</TableCell>
-               <TableCell>$500.00</TableCell>
-               <TableCell>
-                 <Badge variant='outline'>Pending</Badge>
-               </TableCell>
-             </TableRow>
-             <TableRow>
-               <TableCell>2023-03-15</TableCell>
-               <TableCell>Deposit</TableCell>
-               <TableCell>$2,500.00</TableCell>
-               <TableCell>
-                 <Badge variant='secondary'>Completed</Badge>
-               </TableCell>
-             </TableRow>
-             <TableRow>
-               <TableCell>2023-03-10</TableCell>
-               <TableCell>Withdrawal</TableCell>
-               <TableCell>$800.00</TableCell>
-               <TableCell>
-                 <Badge variant='secondary'>Completed</Badge>
-               </TableCell>
-             </TableRow>
-           </TableBody>
-         </Table>
-       </div> */}
     </main>
   )
 }

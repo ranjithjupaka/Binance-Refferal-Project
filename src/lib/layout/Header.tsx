@@ -6,6 +6,7 @@ import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 import { MdMenu } from 'react-icons/md'
 import { MdDashboard } from 'react-icons/md'
+import { FaWallet } from 'react-icons/fa'
 
 const Header = () => {
   const location = useLocation()
@@ -80,7 +81,16 @@ const Header = () => {
             </nav>
           </SheetContent>
         </Sheet>
-        <Button>Connect Wallet</Button>
+        <ConnectWallet
+          switchToActiveChain
+          modalSize='compact'
+          hideBuyButton
+          hideSendButton
+          hideReceiveButton
+          theme={'light'}
+          style={{ backgroundColor: 'white', color: 'black' }}
+        />
+        {/* <Button>Connect Wallet</Button> */}
       </div>
     </header>
     // <header className='text-white body-font'>
