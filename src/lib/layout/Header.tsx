@@ -6,7 +6,9 @@ import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 import { MdMenu } from 'react-icons/md'
 import { MdDashboard } from 'react-icons/md'
-import { FaWallet } from 'react-icons/fa'
+import { HiDocumentReport } from 'react-icons/hi'
+import { FaArrowUpShortWide } from 'react-icons/fa6'
+import { FaRegCreditCard } from 'react-icons/fa'
 
 const Header = () => {
   const location = useLocation()
@@ -20,23 +22,28 @@ const Header = () => {
       >
         <img src='/assets/logo.png' alt='' className='h-10' />
       </a>
-      {/* <Link to='#' className='flex items-center gap-2'>
-        <MountainIcon className='h-6 w-6' />
-        <span className='text-lg font-semibold'>Acme Inc</span>
-      </Link> */}
       <nav className='hidden items-center gap-6 text-sm font-medium md:flex'>
-        <Link to='#' className='hover:underline'>
+        <a href='/' className={`${currentRoute == '/' ? 'text-white' : ''}`}>
           Dashboard
-        </Link>
-        <Link to='#' className='hover:underline'>
+        </a>
+        <a
+          href='/deposit-report'
+          className={`${currentRoute == '/deposit-report' ? 'text-white' : ''}`}
+        >
           Deposit Report
-        </Link>
-        <Link to='#' className='hover:underline'>
+        </a>
+        <a
+          href='/level-details'
+          className={`${currentRoute == '/level-details' ? 'text-white' : ''}`}
+        >
           Level Details
-        </Link>
-        <Link to='#' className='hover:underline'>
+        </a>
+        <a
+          href='/report'
+          className={`${currentRoute == '/report' ? 'text-white' : ''}`}
+        >
           Report
-        </Link>
+        </a>
       </nav>
       <div className='flex items-center gap-2'>
         <Sheet>
@@ -47,35 +54,43 @@ const Header = () => {
           </SheetTrigger>
           <SheetContent
             side='left'
-            className='border w-2/3 bg-black text-white'
+            className='border w-2/3 bg-white text-black'
           >
             <nav className='grid gap-2 p-4 text-sm font-medium w-full'>
               <a
-                href='#'
-                className='hover:bg-gray-400 p-2 flex rounded-md gap-2'
+                href='/'
+                className={` p-2 flex rounded-md gap-2 ${
+                  currentRoute == '/' ? 'bg-black text-white' : ''
+                }`}
               >
                 <MdDashboard className='h-6 w-6' />
                 Dashboard
               </a>
               <a
-                href='#'
-                className='hover:bg-gray-400 p-2 flex rounded-md gap-2'
+                href='/deposit-report'
+                className={` p-2 flex rounded-md gap-2 ${
+                  currentRoute == '/deposit-report' ? 'bg-black text-white' : ''
+                }`}
               >
-                <MdDashboard className='h-6 w-6' />
+                <FaRegCreditCard className='h-6 w-6' />
                 Deposit Report
               </a>
               <a
-                href='#'
-                className='hover:bg-gray-400 p-2 flex rounded-md gap-2'
+                href='/level-details'
+                className={` p-2 flex rounded-md gap-2 ${
+                  currentRoute == '/level-details' ? 'bg-black text-white' : ''
+                }`}
               >
-                <MdDashboard className='h-6 w-6' />
+                <FaArrowUpShortWide className='h-6 w-6' />
                 Level Details
               </a>
               <a
-                href='#'
-                className='hover:bg-gray-400 p-2 flex rounded-md gap-2'
+                href='/report'
+                className={` p-2 flex rounded-md gap-2 ${
+                  currentRoute == '/report' ? 'bg-black text-white' : ''
+                }`}
               >
-                <MdDashboard className='h-6 w-6' />
+                <HiDocumentReport className='h-6 w-6' />
                 Report
               </a>
             </nav>
@@ -90,66 +105,8 @@ const Header = () => {
           theme={'light'}
           style={{ backgroundColor: 'white', color: 'black' }}
         />
-        {/* <Button>Connect Wallet</Button> */}
       </div>
     </header>
-    // <header className='text-white body-font'>
-    //   <div className='container mx-auto flex flex-wrap p-4 flex-col md:flex-row items-center'>
-    //     <a
-    //       className='flex title-font font-medium items-center text-black mb-4 md:mb-0 transition-transform transform-gpu scale-150 cursor-pointer'
-    //       href='/'
-    //     >
-    //       <img
-    //         src='/assets/logo.png'
-    //         alt=''
-    //         className='h-20'
-    //       />
-    //     </a>
-    //     <nav className='md:ml-auto flex flex-wrap items-center text-base justify-center '>
-    //       <a
-    //         className={`mr-5 hover:text-black cursor-pointer ${
-    //           currentRoute == '/' ? 'text-black' : ''
-    //         }`}
-    //         href='/'
-    //       >
-    //         Dashboard
-    //       </a>
-    //       <a
-    //         className={`mr-5 hover:text-black cursor-pointer ${
-    //           currentRoute == '/deposit-report' ? 'text-black' : ''
-    //         }`}
-    //         href='/deposit-report'
-    //       >
-    //         Deposit Report
-    //       </a>
-    //       <a
-    //         className={`mr-5 hover:text-black cursor-pointer ${
-    //           currentRoute == '/level-details' ? 'text-black' : ''
-    //         }`}
-    //         href='/level-details'
-    //       >
-    //         Level Details
-    //       </a>
-    //       <a
-    //         className={`mr-5 hover:text-black cursor-pointer ${
-    //           currentRoute == '/report' ? 'text-black' : ''
-    //         }`}
-    //         href='/report'
-    //       >
-    //         Report
-    //       </a>
-
-    //     </nav>
-    //     {/* <button className='bg-yellow-300 border-b-4 border-r-5  border-yellow-500 text-black px-4 py-2 transition-transform transform-gpu hover:scale-105 hover:border-l-5'>
-    //       Connect Wallet
-    //     </button> */}
-    //     <ConnectWallet
-    //       switchToActiveChain
-    //       modalSize='compact'
-    //       className='bg-yellow-300 border-b-4 border-r-5  border-yellow-500 text-black px-4 py-2 transition-transform transform-gpu hover:scale-105 hover:border-l-5'
-    //     />
-    //   </div>
-    // </header>
   )
 }
 
