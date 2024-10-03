@@ -6,15 +6,33 @@ import {
   TableBody,
   TableCell,
 } from '@/components/ui/table'
+import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
 const index = () => {
   const connected = true
+  const location = useLocation()
+  const [query, setQuery] = useState<string | null>('level')
+
+  useEffect(() => {
+    const s = new URLSearchParams(location.search)
+    console.log(s.get('q'))
+    setQuery(s.get('q'))
+  }, [])
+
+  function capitalizeFirstLetter(s: string | null) {
+    if (!s) return ''
+    return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase()
+  }
+
   return (
     <>
       <section className='text-white body-font mx-auto p-4 w-[90vw]'>
         {connected ? (
           <div className='mt-2 bg-white text-black rounded-md p-4'>
-            <h2 className='text-2xl font-bold mb-4'>level Details</h2>
+            <h2 className='text-2xl font-bold mb-4'>
+              {capitalizeFirstLetter(query)} Income Details
+            </h2>
             <hr className='w-full h-[2px] bg-black' />
             <Table className='w-full'>
               <TableHeader>

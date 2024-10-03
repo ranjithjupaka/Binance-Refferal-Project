@@ -23,14 +23,17 @@ const Header = () => {
         <img src='/assets/logo.png' alt='' className='h-10' />
       </a>
       <nav className='hidden items-center gap-6 text-sm font-medium md:flex'>
-        <a href='/' className={`${currentRoute == '/' ? 'text-white' : ''}`}>
+        <a
+          href='/dashboard'
+          className={`${currentRoute == '/dashboard' ? 'text-white' : ''}`}
+        >
           Dashboard
         </a>
         <a
-          href='/deposit-report'
-          className={`${currentRoute == '/deposit-report' ? 'text-white' : ''}`}
+          href='/transaction-report'
+          className={`${currentRoute == '/transaction-report' ? 'text-white' : ''}`}
         >
-          Deposit Report
+          Transaction Report
         </a>
         <a
           href='/level-details'
@@ -39,10 +42,10 @@ const Header = () => {
           Level Details
         </a>
         <a
-          href='/report'
-          className={`${currentRoute == '/report' ? 'text-white' : ''}`}
+          href='/income-report'
+          className={`${currentRoute == '/income-report' ? 'text-white' : ''}`}
         >
-          Report
+          Income Report
         </a>
       </nav>
       <div className='flex items-center gap-2'>
@@ -58,22 +61,22 @@ const Header = () => {
           >
             <nav className='grid gap-2 p-4 text-sm font-medium w-full'>
               <a
-                href='/'
+                href='/dashboard'
                 className={` p-2 flex rounded-md gap-2 ${
-                  currentRoute == '/' ? 'bg-black text-white' : ''
+                  currentRoute == '/dashboard' ? 'bg-black text-white' : ''
                 }`}
               >
                 <MdDashboard className='h-6 w-6' />
                 Dashboard
               </a>
               <a
-                href='/deposit-report'
+                href='/transaction-report'
                 className={` p-2 flex rounded-md gap-2 ${
-                  currentRoute == '/deposit-report' ? 'bg-black text-white' : ''
+                  currentRoute == '/transaction-report' ? 'bg-black text-white' : ''
                 }`}
               >
                 <FaRegCreditCard className='h-6 w-6' />
-                Deposit Report
+                Transaction Report
               </a>
               <a
                 href='/level-details'
@@ -85,13 +88,13 @@ const Header = () => {
                 Level Details
               </a>
               <a
-                href='/report'
+                href='/income-report'
                 className={` p-2 flex rounded-md gap-2 ${
-                  currentRoute == '/report' ? 'bg-black text-white' : ''
+                  currentRoute == '/income-report' ? 'bg-black text-white' : ''
                 }`}
               >
                 <HiDocumentReport className='h-6 w-6' />
-                Report
+                Income Report
               </a>
             </nav>
           </SheetContent>

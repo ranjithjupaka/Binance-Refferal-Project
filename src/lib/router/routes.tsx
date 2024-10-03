@@ -3,8 +3,9 @@ import type { PathRouteProps } from 'react-router-dom';
 import Home from '../pages/home';
 
 import LevelDetails from '../pages/level-details'
-import Report from '../pages/report'
-import DepositReport from '../pages/deposit-report'
+import IncomeReport from '../pages/income-report'
+import TransactionReport from '../pages/transaction-report'
+import Dashboard from '../pages/dashboard'
 
 // const Home = React.lazy(() => import('@/lib/pages/home'));
 // const Eggs = React.lazy(() => import('@/lib/pages/dragons'))
@@ -17,16 +18,20 @@ export const routes: Array<PathRouteProps> = [
     element: <Home />,
   },
   {
-    path: '/deposit-report',
-    element: <DepositReport />,
+    path: '/dashboard',
+    element: <Dashboard />,
+  },
+  {
+    path: '/transaction-report',
+    element: <TransactionReport />,
   },
   {
     path: '/level-details',
     element: <LevelDetails />,
   },
   {
-    path: '/report',
-    element: <Report />,
+    path: '/income-report',
+    element: <IncomeReport />,
   },
 ]
 
