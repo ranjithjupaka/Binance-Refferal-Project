@@ -1,15 +1,37 @@
-import { useContract, useContractRead } from '@thirdweb-dev/react'
+import { useAddress, useContract, useContractRead } from '@thirdweb-dev/react'
 import { useEffect } from 'react'
 import { Card, CardHeader, CardContent } from '@/components/ui/card'
 import { FaCopy } from 'react-icons/fa'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '@/contexts/AuthContext'
+import { CONTRACT_ABI } from '@/contracts/abi'
 
 const index = () => {
-  const { contract } = useContract('0x42571ca6E3994629061de9e645bB722d9131c4a6')
-  // const { data, isLoading, error } = useContractRead(contract, 'name')
+  const PUBLIC_URL = 'http://localhost:5173'
+  const { contract } = useContract(
+    '0x381b3Cda25d80d66b4e4a46D1242C153638b1003',
+    CONTRACT_ABI
+  )
+  const address = useAddress()
+  const { data, isLoading, error } = useContractRead(
+    contract,
+    'userReferralCodes',
+    [address]
+  )
   const navigate = useNavigate()
+  const { userData } = useAuth()
+  console.log(userData)
+
+  useEffect(() => {
+    console.log(data, error)
+  }, [data, error, isLoading])
+
+  const formatIncome = (income: number) => {
+    const stakes = income / 1000000000
+    return stakes.toFixed(2)
+  }
 
   return (
     <main className='container mx-auto px-4 py-8 sm:px-6 lg:px-8'>
@@ -20,7 +42,7 @@ const index = () => {
           </CardHeader>
           <CardContent className=''>
             <div className='text-sm font-semibold break-all'>
-              0x35D62c3788c3c2B0a5cF2A009CBB8d287f4FfB55
+              {userData['userAddress']}
             </div>
           </CardContent>
         </Card>
@@ -30,7 +52,9 @@ const index = () => {
           </CardHeader>
           <CardContent className='flex gap-2 text-wrap items-center justify-center'>
             <div className='text-sm font-semibold break-all'>
-              https://bullrun.com?ref=abch6789
+              {isLoading
+                ? 'loading...'
+                : ` ${PUBLIC_URL}?ref=${data.toString()}`}
             </div>
             <FaCopy className='h-4' />
           </CardContent>
@@ -40,7 +64,9 @@ const index = () => {
             <h2 className='text-xl font-bold'>Total Stakes</h2>
           </CardHeader>
           <CardContent>
-            <div className='text-xl font-semibold'>9</div>
+            <div className='text-xl font-semibold'>
+              {formatIncome(userData['totalStaked'].toString())}
+            </div>
           </CardContent>
         </Card>
         <Card>
@@ -48,7 +74,9 @@ const index = () => {
             <h2 className='text-xl font-bold'>Total Team</h2>
           </CardHeader>
           <CardContent>
-            <div className='text-xl font-semibold'>3</div>
+            <div className='text-xl font-semibold'>
+              {userData['referrals'] ? userData['referrals'].length : 0}
+            </div>
           </CardContent>
         </Card>
         <Card>
@@ -56,7 +84,9 @@ const index = () => {
             <h2 className='text-xl font-bold'>Direct Income</h2>
           </CardHeader>
           <CardContent>
-            <div className='text-xl font-semibold'>5.63</div>
+            <div className='text-xl font-semibold'>
+              {formatIncome(userData['totalDirectIncome'].toString())}
+            </div>
             <Button
               className='font-dance mt-2'
               onClick={() => navigate('/income-report?q=direct')}
@@ -70,7 +100,9 @@ const index = () => {
             <h2 className='text-xl font-bold'>Level Income</h2>
           </CardHeader>
           <CardContent>
-            <div className='text-xl font-semibold'>0.00</div>
+            <div className='text-xl font-semibold'>
+              {formatIncome(userData['totalLevelIncome'].toString())}
+            </div>
             <Button
               className='font-dance mt-2'
               onClick={() => navigate('/income-report?q=level')}
@@ -84,7 +116,10 @@ const index = () => {
             <h2 className='text-xl font-bold'>BLR Income</h2>
           </CardHeader>
           <CardContent>
-            <div className='text-xl font-semibold'>5.63</div>
+            <div className='text-xl font-semibold'>
+              {' '}
+              {formatIncome(userData['totalBLRIncome'].toString())}
+            </div>
             <Button
               className='font-dance mt-2'
               onClick={() => navigate('/income-report?q=blr')}
@@ -98,7 +133,9 @@ const index = () => {
             <h2 className='text-xl font-bold'>Reward Income</h2>
           </CardHeader>
           <CardContent>
-            <div className='text-xl font-semibold'>0.00</div>
+            <div className='text-xl font-semibold'>
+              {formatIncome(userData['totalRewardIncome'].toString())}
+            </div>
             <Button
               className='font-dance mt-2'
               onClick={() => navigate('/income-report?q=reward')}
