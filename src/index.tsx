@@ -14,7 +14,7 @@ import '@fontsource/plus-jakarta-sans/latin.css'
 import '@/lib/styles/globals.css'
 
 import App from './App'
-import { Polygon, BinanceTestnet } from '@thirdweb-dev/chains'
+import { Polygon, PolygonZkevmCardonaTestnet } from '@thirdweb-dev/chains'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
@@ -27,8 +27,8 @@ root.render(
         coinbaseWallet(),
         walletConnect(),
       ]}
-      activeChain={Polygon}
-      supportedChains={[Polygon, BinanceTestnet]}
+      activeChain={PolygonZkevmCardonaTestnet}
+      supportedChains={[Polygon, PolygonZkevmCardonaTestnet]}
       clientId='314a6830a52191abec2e8fa24dc51180'
     >
       <App />

@@ -17,6 +17,9 @@ export const routes: Array<PathRouteProps> = [
     path: '/',
     element: <Home />,
   },
+]
+
+export const privateRoutes: Array<PathRouteProps> = [
   {
     path: '/dashboard',
     element: <Dashboard />,
@@ -34,5 +37,3 @@ export const routes: Array<PathRouteProps> = [
     element: <IncomeReport />,
   },
 ]
-
-export const privateRoutes: Array<PathRouteProps> = [];

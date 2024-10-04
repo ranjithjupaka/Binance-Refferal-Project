@@ -25,21 +25,15 @@ const Routings = () => {
         ))}
         {privateRoutes.map(({ element, ...privateRouteProps }) => (
           <Route
-            element={
-              <RequireAuth
-                redirectTo={`/login?redirectTo=${privateRouteProps.path}`}
-              >
-                {element}
-              </RequireAuth>
-            }
+            element={<RequireAuth redirectTo={`/`}>{element}</RequireAuth>}
             {...privateRouteProps}
             key={`privateRoute-${privateRouteProps.path}`}
           />
         ))}
-        <Route path="*" element={<Page404 />} />
+        <Route path='*' element={<Page404 />} />
       </Routes>
     </Suspense>
-  );
+  )
 };
 
 export default Routings;
