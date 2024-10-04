@@ -8,48 +8,66 @@ import {
   TableBody,
   TableCell,
 } from '@/components/ui/table'
+import { useAuth } from '@/contexts/AuthContext'
+import { format } from 'path'
 
 const DepositReport = () => {
-  const connected = true
+  const { userData } = useAuth()
+  console.log(userData)
+
+  const getISTDate = (timestamp: number) => {
+    const date = new Date(timestamp * 1000)
+    return date.toLocaleString('en-US', {
+      timeZone: 'Asia/Kolkata',
+      hour12: true,
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+    })
+  }
+
+  const formatIncome = (income: number) => {
+    const stakes = income / 1000000000
+    return stakes.toFixed(2)
+  }
+
   return (
     <>
       <section className='text-white body-font mx-auto p-4 w-[90vw]'>
-        {connected ? (
-          <div className='mt-2 bg-white text-black rounded-md p-4'>
-            <h2 className='text-2xl font-bold mb-4'>Deposit Report</h2>
-            <hr className='w-full h-[2px] bg-black' />
+        <div className='mt-2 bg-white text-black rounded-md p-4'>
+          <h2 className='text-2xl font-bold mb-4'>Transactions Report</h2>
+          <hr className='w-full h-[2px] bg-black' />
+          {userData['transactions'] && userData['transactions'].length > 0 ? (
             <Table className='w-full'>
               <TableHeader>
                 <TableRow>
+                  <TableHead>Type</TableHead>
                   <TableHead>Amount</TableHead>
                   <TableHead>Timestamp</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                <TableRow>
-                  <TableCell>$1,000.00</TableCell>
-                  <TableCell>2023-04-01</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>$500.00</TableCell>
-                  <TableCell>2023-03-28</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>$2,500.00</TableCell>
-                  <TableCell>2023-03-15</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>$800.00</TableCell>
-                  <TableCell>2023-03-10</TableCell>
-                </TableRow>
+                {userData['transactions'].map((transaction: any) => (
+                  <TableRow>
+                    <TableCell>
+                      {transaction.transactionType.toString() === 1
+                        ? 'Withdrawal'
+                        : 'Deposit'}
+                    </TableCell>
+                    <TableCell>
+                      {formatIncome(transaction.amount.toString())}
+                    </TableCell>
+                    <TableCell>
+                      {getISTDate(transaction.timestamp.toString())}
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
-          </div>
-        ) : (
-          <h1 className='title-font sm:text-4xl text-3xl mb-4 font-medium text-white'>
-            Connect your Wallet!
-          </h1>
-        )}
+          ) : (
+            <h1>No Transactions</h1>
+          )}
+        </div>
       </section>
     </>
   )
