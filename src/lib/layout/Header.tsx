@@ -16,37 +16,39 @@ const Header = () => {
 
   return (
     <header className='flex h-16 w-full items-center justify-between p-4 md:p-6 container'>
-      <a
+      <Link
         className='flex title-font font-medium items-center text-black mt-4 transition-transform transform-gpu scale-150 cursor-pointer'
-        href='/'
+        to='/'
       >
         <img src='/assets/logo.png' alt='' className='h-10' />
-      </a>
+      </Link>
       <nav className='hidden items-center gap-6 text-sm font-medium md:flex'>
-        <a
-          href='/dashboard'
+        <Link
+          to='/dashboard'
           className={`${currentRoute == '/dashboard' ? 'text-white' : ''}`}
         >
           Dashboard
-        </a>
-        <a
-          href='/transaction-report'
-          className={`${currentRoute == '/transaction-report' ? 'text-white' : ''}`}
+        </Link>
+        <Link
+          to='/transaction-report'
+          className={`${
+            currentRoute == '/transaction-report' ? 'text-white' : ''
+          }`}
         >
           Transaction Report
-        </a>
-        <a
-          href='/level-details'
+        </Link>
+        <Link
+          to='/level-details'
           className={`${currentRoute == '/level-details' ? 'text-white' : ''}`}
         >
           Level Details
-        </a>
-        <a
-          href='/income-report'
+        </Link>
+        <Link
+          to='/income-report'
           className={`${currentRoute == '/income-report' ? 'text-white' : ''}`}
         >
           Income Report
-        </a>
+        </Link>
       </nav>
       <div className='flex items-center gap-2'>
         <Sheet>
@@ -60,42 +62,44 @@ const Header = () => {
             className='border w-2/3 bg-white text-black'
           >
             <nav className='grid gap-2 p-4 text-sm font-medium w-full'>
-              <a
-                href='/dashboard'
+              <Link
+                to='/dashboard'
                 className={` p-2 flex rounded-md gap-2 ${
                   currentRoute == '/dashboard' ? 'bg-black text-white' : ''
                 }`}
               >
                 <MdDashboard className='h-6 w-6' />
                 Dashboard
-              </a>
-              <a
-                href='/transaction-report'
+              </Link>
+              <Link
+                to='/transaction-report'
                 className={` p-2 flex rounded-md gap-2 ${
-                  currentRoute == '/transaction-report' ? 'bg-black text-white' : ''
+                  currentRoute == '/transaction-report'
+                    ? 'bg-black text-white'
+                    : ''
                 }`}
               >
                 <FaRegCreditCard className='h-6 w-6' />
                 Transaction Report
-              </a>
-              <a
-                href='/level-details'
+              </Link>
+              <Link
+                to='/level-details'
                 className={` p-2 flex rounded-md gap-2 ${
                   currentRoute == '/level-details' ? 'bg-black text-white' : ''
                 }`}
               >
                 <FaArrowUpShortWide className='h-6 w-6' />
                 Level Details
-              </a>
-              <a
-                href='/income-report'
+              </Link>
+              <Link
+                to='/income-report'
                 className={` p-2 flex rounded-md gap-2 ${
                   currentRoute == '/income-report' ? 'bg-black text-white' : ''
                 }`}
               >
                 <HiDocumentReport className='h-6 w-6' />
                 Income Report
-              </a>
+              </Link>
             </nav>
           </SheetContent>
         </Sheet>
@@ -106,7 +110,11 @@ const Header = () => {
           hideSendButton
           hideReceiveButton
           theme={'light'}
-          style={{ backgroundColor: 'white', color: 'black' }}
+          style={{
+            backgroundColor: 'white',
+            color: 'black',
+            marginTop: '16px',
+          }}
         />
       </div>
     </header>

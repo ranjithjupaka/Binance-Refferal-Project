@@ -1,5 +1,10 @@
-import { useAddress, useContract, useContractRead } from '@thirdweb-dev/react'
-import { useEffect } from 'react'
+import {
+  useAddress,
+  useContract,
+  useContractRead,
+  useContractWrite,
+} from '@thirdweb-dev/react'
+import { useEffect, useState } from 'react'
 import { Card, CardHeader, CardContent } from '@/components/ui/card'
 import { FaCopy } from 'react-icons/fa'
 import { Button } from '@/components/ui/button'
@@ -11,6 +16,8 @@ import { toast } from 'react-toastify'
 
 const index = () => {
   const PUBLIC_URL = 'http://localhost:5173'
+  const [ReDepositAmount, setReDepositAmount] = useState(0)
+  const [WithdrawAmount, setWithdrawAmount] = useState(0)
   const { contract } = useContract(
     '0x381b3Cda25d80d66b4e4a46D1242C153638b1003',
     CONTRACT_ABI
@@ -21,6 +28,13 @@ const index = () => {
     'userReferralCodes',
     [address]
   )
+
+  const {
+    mutateAsync: deposit,
+    isLoading: isDepositLoading,
+    error: DepositError,
+  } = useContractWrite(contract, 'deposit')
+
   const navigate = useNavigate()
   const { userData } = useAuth()
   console.log(userData)
@@ -32,6 +46,46 @@ const index = () => {
   const formatIncome = (income: number) => {
     const stakes = income / 1000000000
     return stakes.toFixed(2)
+  }
+
+  const handleReDeposit = async (e: any) => {
+    e.preventDefault()
+    try {
+      const val = ReDepositAmount * 1000000000
+      if (address) {
+        await deposit({
+          args: [address, ''],
+          overrides: {
+            value: val.toString(),
+          },
+        })
+
+        if (!DepositError && !isDepositLoading) {
+          toast.success('ReDeposit Successful')
+        }
+      }
+    } catch (err) {
+      console.log('err', err)
+      console.log('error', DepositError)
+    }
+  }
+
+  const handleWithdraw = async (e: any) => {
+    e.preventDefault()
+    try {
+      const val = WithdrawAmount * 1000000000
+      // if (address) {
+      //   await deposit({
+      //     args: [address, ''],
+      //     overrides: {
+      //       value: val.toString(),
+      //     },
+      //   })
+      // }
+    } catch (err) {
+      console.log('err', err)
+      console.log('error', DepositError)
+    }
   }
 
   return (
@@ -57,12 +111,15 @@ const index = () => {
                 ? 'loading...'
                 : ` ${PUBLIC_URL}?ref=${data.toString()}`}
             </div>
-            <FaCopy className='h-4' onClick={() => {
-              navigator.clipboard.writeText(
-                ` ${PUBLIC_URL}?ref=${data.toString()}`
-              )
-              toast.success('Copied to clipboard')
-            }}/>
+            <FaCopy
+              className='h-4'
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  ` ${PUBLIC_URL}?ref=${data.toString()}`
+                )
+                toast.success('Copied to clipboard')
+              }}
+            />
           </CardContent>
         </Card>
         <Card>
@@ -155,8 +212,13 @@ const index = () => {
             <h2 className='text-xl font-bold'>ReDeposit</h2>
           </CardHeader>
           <CardContent>
-            <Input placeholder='Re-Deposit Amount' />
-            <Button className='font-dance mt-2'>ReDeposit</Button>
+            <Input
+              placeholder='Re-Deposit Amount'
+              onChange={(e) => setReDepositAmount(Number(e.target.value))}
+            />
+            <Button className='font-dance mt-2' onClick={handleReDeposit}>
+              ReDeposit
+            </Button>
           </CardContent>
         </Card>
         <Card>
@@ -164,7 +226,10 @@ const index = () => {
             <h2 className='text-xl font-bold'>Withdraw</h2>
           </CardHeader>
           <CardContent>
-            <Input placeholder='Withdraw Amount' />
+            <Input
+              placeholder='Withdraw Amount'
+              onChange={(e) => setWithdrawAmount(Number(e.target.value))}
+            />
             <Button className='font-dance mt-2'>Withdraw</Button>
           </CardContent>
         </Card>
