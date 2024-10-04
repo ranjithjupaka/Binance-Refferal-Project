@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import RequireAuth from '@/lib/components/auth/RequireAuth'
 import Page404 from '@/lib/pages/404'
 
-import { routes, privateRoutes, publicRoutes } from './routes'
+import { privateRoutes, publicRoutes } from './routes'
 import PublicRoute from './PublicLayout'
 
 const Routings = () => {
