@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { CONTRACT_ABI } from '@/contracts/abi'
+import { toast } from 'react-toastify'
 
 const index = () => {
   const PUBLIC_URL = 'http://localhost:5173'
@@ -56,7 +57,12 @@ const index = () => {
                 ? 'loading...'
                 : ` ${PUBLIC_URL}?ref=${data.toString()}`}
             </div>
-            <FaCopy className='h-4' />
+            <FaCopy className='h-4' onClick={() => {
+              navigator.clipboard.writeText(
+                ` ${PUBLIC_URL}?ref=${data.toString()}`
+              )
+              toast.success('Copied to clipboard')
+            }}/>
           </CardContent>
         </Card>
         <Card>
