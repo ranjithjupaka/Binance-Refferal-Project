@@ -12,7 +12,7 @@ import Dashboard from '../pages/dashboard'
 // const Dashboard = React.lazy(() => import('@/lib/pages/dashboard'))
 // const Buydragons = React.lazy(() => import('@/lib/pages/buydragons'))
 
-export const routes: Array<PathRouteProps> = [
+export const publicRoutes: Array<PathRouteProps> = [
   {
     path: '/',
     element: <Home />,

@@ -39,7 +39,7 @@ const Home = () => {
   } = useContractWrite(contract, 'deposit')
 
   useEffect(() => {
-    if (!isLoading && isAuthenticated) {
+    if (!isLoading && isAuthenticated && location.pathname === '/') {
       navigate('/dashboard')
     }
   }, [isAuthenticated, isLoading])

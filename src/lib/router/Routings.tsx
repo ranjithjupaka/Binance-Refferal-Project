@@ -1,27 +1,22 @@
-/**
- * @note
- * for hook alternative of route element composition:
- * - https://reactrouter.com/docs/en/v6/upgrading/v5#use-useroutes-instead-of-react-router-config
- * - https://reactrouter.com/docs/en/v6/examples/route-objects
- *
- * might need to take notes on:
- * - https://reactrouter.com/docs/en/v6/upgrading/v5#note-on-link-to-values
- */
+import { Suspense } from 'react'
+import { Routes, Route } from 'react-router-dom'
 
-import { Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import RequireAuth from '@/lib/components/auth/RequireAuth'
+import Page404 from '@/lib/pages/404'
 
-import RequireAuth from '@/lib/components/auth/RequireAuth';
-import Page404 from '@/lib/pages/404';
-
-import { routes, privateRoutes } from './routes';
+import { routes, privateRoutes, publicRoutes } from './routes'
+import PublicRoute from './PublicLayout'
 
 const Routings = () => {
   return (
     <Suspense>
       <Routes>
-        {routes.map((routeProps) => (
-          <Route {...routeProps} key={routeProps.path as string} />
+        {publicRoutes.map((routeProps) => (
+          <Route
+            {...routeProps}
+            key={`publicRoute-${routeProps.path}`}
+            element={<PublicRoute>{routeProps.element}</PublicRoute>}
+          />
         ))}
         {privateRoutes.map(({ element, ...privateRouteProps }) => (
           <Route
@@ -34,6 +29,6 @@ const Routings = () => {
       </Routes>
     </Suspense>
   )
-};
+}
 
-export default Routings;
+export default Routings
