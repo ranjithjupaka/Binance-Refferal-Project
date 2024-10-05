@@ -9,11 +9,10 @@ import {
   TableCell,
 } from '@/components/ui/table'
 import { useAuth } from '@/contexts/AuthContext'
-import { format } from 'path'
+
 
 const DepositReport = () => {
   const { userData } = useAuth()
-  console.log(userData)
 
   const getISTDate = (timestamp: number) => {
     const date = new Date(timestamp * 1000)
@@ -23,8 +22,13 @@ const DepositReport = () => {
       hour: 'numeric',
       minute: 'numeric',
       second: 'numeric',
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric',
     })
   }
+
+  console.log('last claimed', getISTDate(userData['lastClaim']))
 
   const formatIncome = (income: number) => {
     const stakes = income / 1000000000
@@ -42,7 +46,7 @@ const DepositReport = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead>Type</TableHead>
-                  <TableHead>Amount</TableHead>
+                  <TableHead>Amount (in POL)</TableHead>
                   <TableHead>Timestamp</TableHead>
                 </TableRow>
               </TableHeader>
@@ -52,7 +56,7 @@ const DepositReport = () => {
                     <TableCell>
                       {transaction['transactionType'].toString() === '1'
                         ? 'Withdrawal'
-                        : 'Deposit'}
+                        : 'Staked'}
                     </TableCell>
                     <TableCell>
                       {formatIncome(transaction.amount.toString())}

@@ -30,12 +30,7 @@ const index = (props: Props) => {
     isLoading: isrefDataLoading,
     error: refDataError,
   } = useContractRead(contract, 'getDownlineReferrals', [address])
-  console.log(
-    'refdata',
-    refData && refData[0][0][0][0],
-    refData && refData[0][0][0][1].toString(),
-    refData
-  )
+  console.log('refdata', refData)
 
   const [lvl, setLvl] = useState(0)
 
@@ -89,6 +84,9 @@ const index = (props: Props) => {
             </TableHeader>
             <TableBody>
               {refData &&
+                refData[lvl] &&
+                refData[lvl].length > 0 &&
+                refData[lvl][0].length > 0 &&
                 refData[lvl][0].map((data: any) => {
                   console.log('data.', data[0], data[1])
                   return (
@@ -97,7 +95,7 @@ const index = (props: Props) => {
                         {data && data[0]}
                       </TableCell>
                       <TableCell>
-                        {data && getPackageName(data[1].toString())}
+                        {data && data[1].toString() / 1000000000}
                       </TableCell>
                     </TableRow>
                   )

@@ -85,6 +85,9 @@ const index = () => {
       hour: 'numeric',
       minute: 'numeric',
       second: 'numeric',
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric',
     })
   }
 
@@ -106,7 +109,9 @@ const index = () => {
                 <span className='text-center text-lg mt-2'>No Records</span>
               ) : (
                 <TableRow>
-                  <TableHead>Amount</TableHead>
+                  <TableHead>Amount (in POL)</TableHead>
+                  {query === 'level' && <TableHead>User</TableHead>}
+                  {query === 'direct' && <TableHead>User</TableHead>}
                   <TableHead>Timestamp</TableHead>
                 </TableRow>
               )}
@@ -116,7 +121,8 @@ const index = () => {
                 levelData?.map((data: any) => (
                   <TableRow>
                     <TableCell>{data.amount.toString() / 1000000000}</TableCell>
-                    <TableCell>
+                    <TableCell className='break-all'>{data.user}</TableCell>
+                    <TableCell className='break-all'>
                       {getISTDate(data.timestamp.toString())}
                     </TableCell>
                   </TableRow>
@@ -125,7 +131,7 @@ const index = () => {
                 rewardData?.map((data: any) => (
                   <TableRow>
                     <TableCell>{data.amount.toString() / 1000000000}</TableCell>
-                    <TableCell>
+                    <TableCell className='break-all'>
                       {getISTDate(data.timestamp.toString())}
                     </TableCell>
                   </TableRow>
@@ -134,7 +140,8 @@ const index = () => {
                 directData?.map((data: any) => (
                   <TableRow>
                     <TableCell>{data.amount.toString() / 1000000000}</TableCell>
-                    <TableCell>
+                    <TableCell className='break-all'>{data.user}</TableCell>
+                    <TableCell className='break-all'>
                       {getISTDate(data.timestamp.toString())}
                     </TableCell>
                   </TableRow>
@@ -143,7 +150,7 @@ const index = () => {
                 blrData?.map((data: any) => (
                   <TableRow>
                     <TableCell>{data.amount.toString() / 1000000000}</TableCell>
-                    <TableCell>
+                    <TableCell className='break-all'>
                       {getISTDate(data.timestamp.toString())}
                     </TableCell>
                   </TableRow>
@@ -152,7 +159,7 @@ const index = () => {
                 cashbackData?.map((data: any) => (
                   <TableRow>
                     <TableCell>{data.amount.toString() / 1000000000}</TableCell>
-                    <TableCell>
+                    <TableCell className='break-all'>
                       {getISTDate(data.timestamp.toString())}
                     </TableCell>
                   </TableRow>

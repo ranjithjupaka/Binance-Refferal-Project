@@ -50,12 +50,12 @@ const Header = () => {
         >
           Team
         </Link>
-        <Link
+        {/* <Link
           to='/income-report'
           className={`${currentRoute == '/income-report' ? 'text-white' : ''}`}
         >
           Income Report
-        </Link>
+        </Link> */}
       </nav>
       <div className='flex items-center gap-2'>
         <Sheet>
@@ -107,7 +107,7 @@ const Header = () => {
                 <TiGroup className='h-6 w-6' />
                 Team
               </Link>
-              <Link
+              {/* <Link
                 to='/income-report'
                 className={` p-2 flex rounded-md gap-2 ${
                   currentRoute == '/income-report' ? 'bg-black text-white' : ''
@@ -115,7 +115,7 @@ const Header = () => {
               >
                 <HiDocumentReport className='h-6 w-6' />
                 Income Report
-              </Link>
+              </Link> */}
             </nav>
           </SheetContent>
         </Sheet>
