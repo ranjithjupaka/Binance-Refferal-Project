@@ -33,36 +33,38 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     error: dataError,
   } = useContractRead(contract, 'getUserDetails', [address])
 
-  const {
-    data: stakerBusinessData,
-    isLoading: isstakerBusinessLoading,
-    error: stakerBusinessError,
-  } = useContractRead(contract, 'stakerBusiness', [address])
 
-  const checkAuth = async () => {
-    if (!address) {
-      setIsAuthenticated(false)
-      setIsLoading(false)
-      return
-    }
+    const {
+      data: stakerBusinessData,
+      isLoading: isstakerBusinessLoading,
+      error: stakerBusinessError,
+    } = useContractRead(contract, 'stakerBusiness', [address])
 
-    try {
-      if (userData && !isDataLoading) {
-        const isValidUser =
-          userData.userAddress &&
-          userData.userAddress !== '0x0000000000000000000000000000000000000000'
-        setIsAuthenticated(isValidUser)
-      } else if (dataError) {
-        setError(dataError as Error)
+    const checkAuth = async () => {
+      if (!address) {
         setIsAuthenticated(false)
+        setIsLoading(false)
+        return
       }
-    } catch (err) {
-      setError(err as Error)
-      setIsAuthenticated(false)
-    } finally {
-      setIsLoading(false)
+
+      try {
+        if (userData && !isDataLoading) {
+          const isValidUser =
+            userData.userAddress &&
+            userData.userAddress !==
+              '0x0000000000000000000000000000000000000000'
+          setIsAuthenticated(isValidUser)
+        } else if (dataError) {
+          setError(dataError as Error)
+          setIsAuthenticated(false)
+        }
+      } catch (err) {
+        setError(err as Error)
+        setIsAuthenticated(false)
+      } finally {
+        setIsLoading(false)
+      }
     }
-  }
 
   useEffect(() => {
     checkAuth()
