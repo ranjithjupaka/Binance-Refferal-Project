@@ -1,4 +1,4 @@
-import { CONTRACT_ABI } from '@/contracts/abi'
+import { CONTRACT_ABI, contract_address } from '@/contracts/abi'
 import { useAddress, useContract, useContractRead } from '@thirdweb-dev/react'
 import {
   createContext,
@@ -24,10 +24,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<Error | null>(null)
   const address = useAddress()
 
-  const { contract } = useContract(
-    '0x381b3Cda25d80d66b4e4a46D1242C153638b1003',
-    CONTRACT_ABI
-  )
+  const { contract } = useContract(contract_address, CONTRACT_ABI)
 
   const {
     data: userData,

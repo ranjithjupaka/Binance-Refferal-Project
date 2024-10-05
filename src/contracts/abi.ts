@@ -1,3 +1,4 @@
+export const contract_address = '0x6F18F9E297daC9Be6f7F209EadCd96F4EF711Bd1'
 export const CONTRACT_ABI = [
   {
     inputs: [],
@@ -28,38 +29,6 @@ export const CONTRACT_ABI = [
     ],
     name: 'BLRIncomeClaimed',
     type: 'event',
-  },
-  {
-    inputs: [],
-    name: 'claimBLRIncome',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'claimROIIncome',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'string',
-        name: '_username',
-        type: 'string',
-      },
-      {
-        internalType: 'string',
-        name: '_refcode',
-        type: 'string',
-      },
-    ],
-    name: 'deposit',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
   },
   {
     anonymous: false,
@@ -147,6 +116,31 @@ export const CONTRACT_ABI = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'packageIndex',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'string',
+        name: 'parameter',
+        type: 'string',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'newValue',
+        type: 'uint256',
+      },
+    ],
+    name: 'PackageUpdated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: true,
         internalType: 'address',
         name: 'user',
@@ -167,45 +161,6 @@ export const CONTRACT_ABI = [
     ],
     name: 'ROIClaimed',
     type: 'event',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_newFeeWallet',
-        type: 'address',
-      },
-    ],
-    name: 'setFeeWallet',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'string',
-        name: '_refCode',
-        type: 'string',
-      },
-    ],
-    name: 'setOwnerRefCode',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'withdraw',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
     anonymous: false,
@@ -235,6 +190,103 @@ export const CONTRACT_ABI = [
   {
     inputs: [],
     name: 'BLR_MULTIPLIER',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'DIRECT_INCOME_MULTIPLIER',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MAX_ROI_MULTIPLIER',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MIN_JOIN_AMOUNT',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MIN_WITHDRAWAL',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'ONE_DAY',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'ROIPercentages',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'WITHDRAWAL_FEE',
     outputs: [
       {
         internalType: 'uint256',
@@ -305,15 +357,34 @@ export const CONTRACT_ABI = [
   },
   {
     inputs: [],
-    name: 'DIRECT_INCOME_MULTIPLIER',
-    outputs: [
+    name: 'claimBLRIncome',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'claimROIIncome',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
       {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
+        internalType: 'string',
+        name: '_username',
+        type: 'string',
+      },
+      {
+        internalType: 'address',
+        name: '_refferer',
+        type: 'address',
       },
     ],
-    stateMutability: 'view',
+    name: 'deposit',
+    outputs: [],
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -346,6 +417,88 @@ export const CONTRACT_ABI = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'packageIndex',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'newMinAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'newMaxAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'newDailyROI',
+        type: 'uint256',
+      },
+    ],
+    name: 'editPackage',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'packageIndex',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'newDailyROI',
+        type: 'uint256',
+      },
+    ],
+    name: 'editPackageDailyROI',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'packageIndex',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'newMaxAmount',
+        type: 'uint256',
+      },
+    ],
+    name: 'editPackageMaxAmount',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'packageIndex',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'newMinAmount',
+        type: 'uint256',
+      },
+    ],
+    name: 'editPackageMinAmount',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'feewallet',
     outputs: [
@@ -375,19 +528,31 @@ export const CONTRACT_ABI = [
     inputs: [
       {
         internalType: 'address',
-        name: 'userAddress',
+        name: 'user',
         type: 'address',
       },
     ],
-    name: 'generateReferralCode',
+    name: 'getAllBLR',
     outputs: [
       {
-        internalType: 'string',
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'timestamp',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct BULLRUN.Income[]',
         name: '',
-        type: 'string',
+        type: 'tuple[]',
       },
     ],
-    stateMutability: 'pure',
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -398,12 +563,117 @@ export const CONTRACT_ABI = [
         type: 'address',
       },
     ],
-    name: 'getReferralCode',
+    name: 'getAllCashback',
     outputs: [
       {
-        internalType: 'string',
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'timestamp',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct BULLRUN.Income[]',
         name: '',
-        type: 'string',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+    ],
+    name: 'getAllDirect',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'timestamp',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct BULLRUN.Income[]',
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+    ],
+    name: 'getAllLevel',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'timestamp',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct BULLRUN.Income[]',
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+    ],
+    name: 'getAllReward',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'timestamp',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct BULLRUN.Income[]',
+        name: '',
+        type: 'tuple[]',
       },
     ],
     stateMutability: 'view',
@@ -437,16 +707,16 @@ export const CONTRACT_ABI = [
     inputs: [
       {
         internalType: 'address',
-        name: '_user',
+        name: '_refferer',
         type: 'address',
       },
     ],
     name: 'getReferrerChain',
     outputs: [
       {
-        internalType: 'address[7]',
+        internalType: 'address[6]',
         name: '',
-        type: 'address[7]',
+        type: 'address[6]',
       },
     ],
     stateMutability: 'view',
@@ -460,25 +730,6 @@ export const CONTRACT_ABI = [
         internalType: 'uint256',
         name: '',
         type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'string',
-        name: 'code',
-        type: 'string',
-      },
-    ],
-    name: 'getUserByReferralCode',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -716,58 +967,6 @@ export const CONTRACT_ABI = [
   },
   {
     inputs: [],
-    name: 'MAX_ROI_MULTIPLIER',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MIN_JOIN_AMOUNT',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MIN_WITHDRAWAL',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'ONE_DAY',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
     name: 'owner',
     outputs: [
       {
@@ -824,25 +1023,6 @@ export const CONTRACT_ABI = [
   {
     inputs: [
       {
-        internalType: 'string',
-        name: '',
-        type: 'string',
-      },
-    ],
-    name: 'referralCodes',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         internalType: 'uint256',
         name: '',
         type: 'uint256',
@@ -891,16 +1071,68 @@ export const CONTRACT_ABI = [
   {
     inputs: [
       {
+        internalType: 'address',
+        name: '_newFeeWallet',
+        type: 'address',
+      },
+    ],
+    name: 'setFeeWallet',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'stakerBusiness',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'totalTeamCount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'teamBusiness',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+      {
         internalType: 'uint256',
         name: '',
         type: 'uint256',
       },
     ],
-    name: 'ROIPercentages',
+    name: 'stakerTeams',
     outputs: [
       {
         internalType: 'uint256',
-        name: '',
+        name: 'levelBusiness',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'levelBonuse',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'levelTeam',
         type: 'uint256',
       },
     ],
@@ -933,13 +1165,28 @@ export const CONTRACT_ABI = [
         name: '',
         type: 'address',
       },
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    name: 'userReferralCodes',
+    name: 'userTransactions',
     outputs: [
       {
-        internalType: 'string',
-        name: '',
-        type: 'string',
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'timestamp',
+        type: 'uint256',
+      },
+      {
+        internalType: 'enum BULLRUN.TransactionType',
+        name: 'transactionType',
+        type: 'uint8',
       },
     ],
     stateMutability: 'view',
@@ -1022,48 +1269,14 @@ export const CONTRACT_ABI = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-      {
         internalType: 'uint256',
-        name: '',
+        name: '_amount',
         type: 'uint256',
       },
     ],
-    name: 'userTransactions',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'timestamp',
-        type: 'uint256',
-      },
-      {
-        internalType: 'enum BULLRUN.TransactionType',
-        name: 'transactionType',
-        type: 'uint8',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'WITHDRAWAL_FEE',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
+    name: 'withdraw',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
 ]

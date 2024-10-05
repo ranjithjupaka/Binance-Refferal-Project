@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
-import { CONTRACT_ABI } from '@/contracts/abi'
+import { CONTRACT_ABI, contract_address } from '@/contracts/abi'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { toast } from 'react-toastify'
@@ -25,10 +25,7 @@ import { toast } from 'react-toastify'
 const Home = () => {
   const navigate = useNavigate()
   const { isAuthenticated, isLoading } = useAuth()
-  const { contract } = useContract(
-    '0x381b3Cda25d80d66b4e4a46D1242C153638b1003',
-    CONTRACT_ABI
-  )
+  const { contract } = useContract(contract_address, CONTRACT_ABI)
   const address = useAddress()
 
   const [username, setUsername] = useState('')

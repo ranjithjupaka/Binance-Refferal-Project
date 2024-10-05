@@ -11,23 +11,22 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
-import { CONTRACT_ABI } from '@/contracts/abi'
+import { CONTRACT_ABI, contract_address } from '@/contracts/abi'
 import { toast } from 'react-toastify'
 
 const index = () => {
   const PUBLIC_URL = 'http://localhost:5173'
   const [ReDepositAmount, setReDepositAmount] = useState(0)
   const [WithdrawAmount, setWithdrawAmount] = useState(0)
-  const { contract } = useContract(
-    '0x381b3Cda25d80d66b4e4a46D1242C153638b1003',
-    CONTRACT_ABI
-  )
+  const { contract } = useContract(contract_address, CONTRACT_ABI)
   const address = useAddress()
-  const { data, isLoading, error } = useContractRead(
-    contract,
-    'userReferralCodes',
-    [address]
-  )
+  const [url, setUrl] = useState('')
+
+  console.log(window.location.href.split('/dashboard')[0])
+
+  useEffect(() => {
+    setUrl(window.location.href.split('/dashboard')[0])
+  }, [])
 
   const {
     mutateAsync: deposit,
@@ -38,10 +37,6 @@ const index = () => {
   const navigate = useNavigate()
   const { userData } = useAuth()
   console.log(userData)
-
-  useEffect(() => {
-    console.log(data, error)
-  }, [data, error, isLoading])
 
   const formatIncome = (income: number) => {
     const stakes = income / 1000000000
@@ -107,15 +102,13 @@ const index = () => {
           </CardHeader>
           <CardContent className='flex gap-2 text-wrap items-center justify-center'>
             <div className='text-sm font-semibold break-all'>
-              {isLoading
-                ? 'loading...'
-                : ` ${PUBLIC_URL}?ref=${data.toString()}`}
+              {` ${url}?ref=${address}`}
             </div>
             <FaCopy
               className='h-4'
               onClick={() => {
                 navigator.clipboard.writeText(
-                  ` ${PUBLIC_URL}?ref=${data.toString()}`
+                  ` ${url}?ref=${userData['referrer']}`
                 )
                 toast.success('Copied to clipboard')
               }}
