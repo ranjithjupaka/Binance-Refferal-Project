@@ -47,8 +47,8 @@ const index = () => {
     } = useContractWrite(contract, 'claimROIIncome')
 
     const navigate = useNavigate()
-    const { userData } = useAuth()
-    console.log(userData)
+    const { userData, stakerBusinessData } = useAuth()
+    console.log(userData, stakerBusinessData)
 
     const formatIncome = (income: number) => {
       const stakes = income / 1000000000
@@ -188,7 +188,17 @@ const index = () => {
             </CardHeader>
             <CardContent>
               <div className='text-xl font-semibold'>
-                {userData['referrals'] ? userData['referrals'].length : 0}
+                {stakerBusinessData['totalTeamCount'].toString()}
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <h2 className='text-xl font-bold'>Total Team Business</h2>
+            </CardHeader>
+            <CardContent>
+              <div className='text-xl font-semibold'>
+                {formatIncome(stakerBusinessData['teamBusiness'].toString())}
               </div>
             </CardContent>
           </Card>

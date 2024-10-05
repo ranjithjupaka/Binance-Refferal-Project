@@ -13,6 +13,7 @@ interface AuthContextType {
   isLoading: boolean
   userData: any | null
   error: Error | null
+  stakerBusinessData: any | null
   checkAuth: () => Promise<void>
 }
 
@@ -31,6 +32,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isLoading: isDataLoading,
     error: dataError,
   } = useContractRead(contract, 'getUserDetails', [address])
+
+  const {
+    data: stakerBusinessData,
+    isLoading: isstakerBusinessLoading,
+    error: stakerBusinessError,
+  } = useContractRead(contract, 'stakerBusiness', [address])
 
   const checkAuth = async () => {
     if (!address) {
@@ -65,6 +72,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isAuthenticated,
     isLoading,
     userData,
+    stakerBusinessData,
     error,
     checkAuth,
   }
