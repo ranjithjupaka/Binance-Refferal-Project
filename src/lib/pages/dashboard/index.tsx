@@ -105,7 +105,7 @@ const index = () => {
               {` ${url}?ref=${address}`}
             </div>
             <FaCopy
-              className='h-4'
+              className='h-8 w-8 cursor-pointer'
               onClick={() => {
                 navigator.clipboard.writeText(` ${url}?ref=${address}`)
                 toast.success('Copied to clipboard')
