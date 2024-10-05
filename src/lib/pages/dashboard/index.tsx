@@ -54,7 +54,7 @@ const index = () => {
       const val = ReDepositAmount * 1000000000
       if (address) {
         await deposit({
-          args: [address, ''],
+          args: ['', ''],
           overrides: {
             value: val.toString(),
           },

@@ -3,6 +3,7 @@ import {
   useContract,
   useContractRead,
   useContractWrite,
+  Web3Button,
 } from '@thirdweb-dev/react'
 import { Card } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
@@ -19,6 +20,7 @@ import { useEffect, useState } from 'react'
 import { CONTRACT_ABI } from '@/contracts/abi'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
+import { toast } from 'react-toastify'
 
 const Home = () => {
   const navigate = useNavigate()
@@ -27,6 +29,7 @@ const Home = () => {
     '0x381b3Cda25d80d66b4e4a46D1242C153638b1003',
     CONTRACT_ABI
   )
+  const address = useAddress()
 
   const [username, setUsername] = useState('')
   const [plan, setPlan] = useState(0)
@@ -35,7 +38,7 @@ const Home = () => {
   const {
     mutateAsync: deposit,
     isLoading: isDepositLoading,
-    error,
+    error: DepositError,
   } = useContractWrite(contract, 'deposit')
 
   useEffect(() => {
@@ -44,30 +47,27 @@ const Home = () => {
     }
   }, [isAuthenticated, isLoading])
 
-  useEffect(() => {
-    if (!isDepositLoading && error) {
-      console.log('error', error)
-    }
-  }, [isDepositLoading, error])
-
   const handleStake = async (e: any) => {
     e.preventDefault()
 
+    e.preventDefault()
     try {
       const val = amount * 1000000000
-      console.log(username, plan, amount)
-
-      if (username && plan && amount) {
+      if (address) {
         await deposit({
           args: [username, 'abc123'],
           overrides: {
             value: val.toString(),
           },
         })
+
+        if (!DepositError && !isDepositLoading) {
+          toast.success('Stake Successful')
+        }
       }
     } catch (err) {
       console.log('err', err)
-      console.log('error', error)
+      console.log('error', DepositError)
     }
   }
   return (
