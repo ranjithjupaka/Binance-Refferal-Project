@@ -64,7 +64,12 @@ const index = () => {
   useEffect(() => {
     const s = new URLSearchParams(location.search)
     console.log(s.get('q'))
-    setQuery(s.get('q'))
+
+    if (!s.get('q')) {
+      setQuery('level')
+    } else {
+      setQuery(s.get('q'))
+    }
   }, [])
 
   function capitalizeFirstLetter(s: string | null) {
