@@ -107,9 +107,7 @@ const index = () => {
             <FaCopy
               className='h-4'
               onClick={() => {
-                navigator.clipboard.writeText(
-                  ` ${url}?ref=${userData['referrer']}`
-                )
+                navigator.clipboard.writeText(` ${url}?ref=${address}`)
                 toast.success('Copied to clipboard')
               }}
             />
@@ -132,6 +130,25 @@ const index = () => {
           <CardContent>
             <div className='text-xl font-semibold'>
               {userData['referrals'] ? userData['referrals'].length : 0}
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <h2 className='text-xl font-bold'>Cashback Income</h2>
+          </CardHeader>
+          <CardContent>
+            <div className='text-xl font-semibold'>
+              {formatIncome(userData['totalCashbackIncome'].toString())}
+            </div>
+            <div className='flex items-center justify-center gap-2'>
+              <Button className='font-dance mt-2'>Claim</Button>
+              <Button
+                className='font-dance mt-2'
+                onClick={() => navigate('/income-report?q=cashback')}
+              >
+                View Details
+              </Button>
             </div>
           </CardContent>
         </Card>

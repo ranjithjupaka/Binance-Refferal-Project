@@ -31,12 +31,29 @@ const Home = () => {
   const [username, setUsername] = useState('')
   const [plan, setPlan] = useState(0)
   const [amount, setAmount] = useState(0)
+  const [ref_address, setRefAddress] = useState<any>('')
 
   const {
     mutateAsync: deposit,
     isLoading: isDepositLoading,
     error: DepositError,
   } = useContractWrite(contract, 'deposit')
+
+  const [query, setQuery] = useState<string | null>('level')
+
+  useEffect(() => {
+    const s = new URLSearchParams(location.search)
+    console.log(s.get('ref'))
+    setRefAddress(s.get('ref'))
+  }, [location.search])
+
+  // useEffect(() => {
+  //   if (!isDataLoading && dataError) {
+  //     console.log('dataError', dataError)
+
+  //     toast.error('Invalid Refferal Link')
+  //   }
+  // }, [isDataLoading, dataError, userData])
 
   useEffect(() => {
     if (!isLoading && isAuthenticated && location.pathname === '/') {
@@ -47,16 +64,19 @@ const Home = () => {
   const handleStake = async (e: any) => {
     e.preventDefault()
 
-    e.preventDefault()
+    console.log(username, ref_address, amount, plan)
+
     try {
       const val = amount * 1000000000
       if (address) {
         await deposit({
-          args: [username, 'abc123'],
+          args: [username, ref_address],
           overrides: {
             value: val.toString(),
           },
         })
+
+        console.log('isDepositLoading', isDepositLoading, DepositError)
 
         if (!DepositError && !isDepositLoading) {
           toast.success('Stake Successful')
@@ -101,6 +121,15 @@ const Home = () => {
               type='number'
               placeholder='Enter the amount'
               onChange={(e) => setAmount(Number(e.target.value))}
+            />
+          </div>
+          <div className='grid gap-2'>
+            <Label htmlFor='amount'>Amount</Label>
+            <Input
+              id='amount'
+              placeholder='Enter Refaddress'
+              value={ref_address}
+              readOnly
             />
           </div>
           <Button type='submit' className='w-full' onClick={handleStake}>
