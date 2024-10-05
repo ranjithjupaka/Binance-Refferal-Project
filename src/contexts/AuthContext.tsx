@@ -33,6 +33,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     error: dataError,
   } = useContractRead(contract, 'getUserDetails', [address])
 
+    
 
     const {
       data: stakerBusinessData,

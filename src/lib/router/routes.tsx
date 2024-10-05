@@ -6,6 +6,7 @@ import LevelDetails from '../pages/level-details'
 import IncomeReport from '../pages/income-report'
 import TransactionReport from '../pages/transaction-report'
 import Dashboard from '../pages/dashboard'
+import Team from '../pages/team'
 
 // const Home = React.lazy(() => import('@/lib/pages/home'));
 // const Eggs = React.lazy(() => import('@/lib/pages/dragons'))
@@ -35,5 +36,9 @@ export const privateRoutes: Array<PathRouteProps> = [
   {
     path: '/income-report',
     element: <IncomeReport />,
+  },
+  {
+    path: '/team',
+    element: <Team />,
   },
 ]

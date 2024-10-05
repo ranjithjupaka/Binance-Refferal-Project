@@ -74,7 +74,7 @@ const index = () => {
         const val = ReDepositAmount * 1000000000
         if (address) {
           await deposit({
-            args: ['', ''],
+            args: [''],
             overrides: {
               value: val.toString(),
             },
@@ -298,17 +298,13 @@ const index = () => {
                 {' '}
                 {formatIncome(userData['totalBLRIncome'].toString())}
               </div>
-              <div className='flex items-center justify-center gap-2'>
-                <Button className='font-dance mt-2' onClick={handleClaimBLR}>
-                  {isclaimBLRLoading ? 'Claiming...' : 'Claim'}
-                </Button>
-                <Button
-                  className='font-dance mt-2'
-                  onClick={() => navigate('/income-report?q=blr')}
-                >
-                  View Details
-                </Button>
-              </div>
+
+              <Button
+                className='font-dance mt-2'
+                onClick={() => navigate('/income-report?q=blr')}
+              >
+                View Details
+              </Button>
             </CardContent>
           </Card>
           <Card>

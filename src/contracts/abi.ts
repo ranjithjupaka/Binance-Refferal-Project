@@ -1,9 +1,45 @@
-export const contract_address = '0xFB936643794d774eacB658c318127bE5f716f28a'
+export const contract_address = '0x959cc3A9feb19F845889210680a91Ca8f5B3BDaB'
 export const CONTRACT_ABI = [
   {
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'constructor',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'requested',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'available',
+        type: 'uint256',
+      },
+    ],
+    name: 'InsufficientBalance',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'InvalidAddress',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'NotOwner',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'WithdrawFailed',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'ZeroAmount',
+    type: 'error',
   },
   {
     anonymous: false,
@@ -32,13 +68,6 @@ export const CONTRACT_ABI = [
   },
   {
     inputs: [],
-    name: 'claimBLRIncome',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
     name: 'claimROIIncome',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -46,11 +75,6 @@ export const CONTRACT_ABI = [
   },
   {
     inputs: [
-      {
-        internalType: 'string',
-        name: '_username',
-        type: 'string',
-      },
       {
         internalType: 'address',
         name: '_refferer',
@@ -216,12 +240,6 @@ export const CONTRACT_ABI = [
         name: 'user',
         type: 'address',
       },
-      {
-        indexed: false,
-        internalType: 'string',
-        name: 'username',
-        type: 'string',
-      },
     ],
     name: 'NewUserCreated',
     type: 'event',
@@ -339,6 +357,34 @@ export const CONTRACT_ABI = [
     ],
     name: 'Withdraw',
     type: 'event',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_to',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'withdrawContractBalance',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: 'success',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    stateMutability: 'payable',
+    type: 'receive',
   },
   {
     inputs: [],
@@ -635,6 +681,57 @@ export const CONTRACT_ABI = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'getContractBalance',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_userAddress',
+        type: 'address',
+      },
+    ],
+    name: 'getDownlineReferrals',
+    outputs: [
+      {
+        components: [
+          {
+            components: [
+              {
+                internalType: 'address',
+                name: 'userAddress',
+                type: 'address',
+              },
+              {
+                internalType: 'uint256',
+                name: 'packageIndex',
+                type: 'uint256',
+              },
+            ],
+            internalType: 'struct BULLRUN.ReferralData[]',
+            name: 'referrals',
+            type: 'tuple[]',
+          },
+        ],
+        internalType: 'struct BULLRUN.LevelReferrals[]',
+        name: 'allLevels',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'address',
@@ -702,11 +799,6 @@ export const CONTRACT_ABI = [
     outputs: [
       {
         components: [
-          {
-            internalType: 'string',
-            name: 'username',
-            type: 'string',
-          },
           {
             internalType: 'address',
             name: 'userAddress',
@@ -986,19 +1078,6 @@ export const CONTRACT_ABI = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'ownerRefCode',
-    outputs: [
-      {
-        internalType: 'string',
-        name: '',
-        type: 'string',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'uint256',
@@ -1181,11 +1260,6 @@ export const CONTRACT_ABI = [
     ],
     name: 'users',
     outputs: [
-      {
-        internalType: 'string',
-        name: 'username',
-        type: 'string',
-      },
       {
         internalType: 'address',
         name: 'userAddress',

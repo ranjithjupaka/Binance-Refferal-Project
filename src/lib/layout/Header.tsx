@@ -9,6 +9,7 @@ import { MdDashboard } from 'react-icons/md'
 import { HiDocumentReport } from 'react-icons/hi'
 import { FaArrowUpShortWide } from 'react-icons/fa6'
 import { FaRegCreditCard } from 'react-icons/fa'
+import { TiGroup } from 'react-icons/ti'
 
 const Header = () => {
   const location = useLocation()
@@ -42,6 +43,12 @@ const Header = () => {
           className={`${currentRoute == '/level-details' ? 'text-white' : ''}`}
         >
           Level Details
+        </Link>
+        <Link
+          to='/team'
+          className={`${currentRoute == '/team' ? 'text-white' : ''}`}
+        >
+          Team
         </Link>
         <Link
           to='/income-report'
@@ -90,6 +97,15 @@ const Header = () => {
               >
                 <FaArrowUpShortWide className='h-6 w-6' />
                 Level Details
+              </Link>
+              <Link
+                to='/team'
+                className={` p-2 flex rounded-md gap-2 ${
+                  currentRoute == '/team' ? 'bg-black text-white' : ''
+                }`}
+              >
+                <TiGroup className='h-6 w-6' />
+                Team
               </Link>
               <Link
                 to='/income-report'

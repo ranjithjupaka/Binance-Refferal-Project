@@ -70,7 +70,7 @@ const Home = () => {
       const val = amount * 1000000000
       if (address) {
         await deposit({
-          args: [username, ref_address],
+          args: [ref_address],
           overrides: {
             value: val.toString(),
           },
@@ -91,7 +91,7 @@ const Home = () => {
     <main className='container mx-auto px-4 md:px-6 flex-1 flex flex-col items-center justify-center space-y-8'>
       <Card className='w-[80vw] md:w-[40vw] rounded-2xl p-6 space-y-4 mt-4'>
         <form className='grid gap-4 '>
-          <div className='grid gap-2'>
+          {/* <div className='grid gap-2'>
             <Label htmlFor='username'>Username</Label>
             <Input
               id='username'
@@ -99,7 +99,7 @@ const Home = () => {
               placeholder='Enter your username'
               onChange={(e) => setUsername(e.target.value)}
             />
-          </div>
+          </div> */}
           <div className='grid gap-2'>
             <Label htmlFor='plan'>Plan</Label>
             <Select onValueChange={(value) => setPlan(Number(value))}>
