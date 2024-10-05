@@ -28,12 +28,28 @@ const index = () => {
   return (
     <>
       <section className='text-white body-font mx-auto p-4 w-[90vw]'>
-        {connected ? (
-          <div className='mt-2 bg-white text-black rounded-md p-4'>
-            <h2 className='text-2xl font-bold mb-4'>
-              {capitalizeFirstLetter(query)} Income Details
-            </h2>
-            <hr className='w-full h-[2px] bg-black' />
+        <div className='mt-2 bg-white text-black rounded-md p-4'>
+          <h2 className='text-2xl font-bold mb-4'>
+            {capitalizeFirstLetter(query)} Income Details
+          </h2>
+          <hr className='w-full h-[2px] bg-black' />
+          {query === 'direct' && (
+            <Table className='w-full'>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Amount</TableHead>
+                  <TableHead>Timestamp</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>1</TableCell>
+                  <TableCell>2</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          )}
+          {query === 'level' && (
             <Table className='w-full'>
               <TableHeader>
                 <TableRow>
@@ -70,12 +86,8 @@ const index = () => {
                 </TableRow>
               </TableBody>
             </Table>
-          </div>
-        ) : (
-          <h1 className='title-font sm:text-4xl text-3xl mb-4 font-medium text-white'>
-            Connect your Wallet!
-          </h1>
-        )}
+          )}
+        </div>
       </section>
     </>
   )
