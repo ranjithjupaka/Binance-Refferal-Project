@@ -115,7 +115,7 @@ const index = () => {
               {query === 'level' &&
                 levelData?.map((data: any) => (
                   <TableRow>
-                    <TableCell>{data.amount.toString()}</TableCell>
+                    <TableCell>{data.amount.toString() / 1000000000}</TableCell>
                     <TableCell>
                       {getISTDate(data.timestamp.toString())}
                     </TableCell>
@@ -124,7 +124,7 @@ const index = () => {
               {query === 'reward' &&
                 rewardData?.map((data: any) => (
                   <TableRow>
-                    <TableCell>{data.amount.toString()}</TableCell>
+                    <TableCell>{data.amount.toString() / 1000000000}</TableCell>
                     <TableCell>
                       {getISTDate(data.timestamp.toString())}
                     </TableCell>
@@ -133,7 +133,7 @@ const index = () => {
               {query === 'direct' &&
                 directData?.map((data: any) => (
                   <TableRow>
-                    <TableCell>{data.amount.toString()}</TableCell>
+                    <TableCell>{data.amount.toString() / 1000000000}</TableCell>
                     <TableCell>
                       {getISTDate(data.timestamp.toString())}
                     </TableCell>
@@ -142,7 +142,7 @@ const index = () => {
               {query === 'blr' &&
                 blrData?.map((data: any) => (
                   <TableRow>
-                    <TableCell>{data.amount.toString()}</TableCell>
+                    <TableCell>{data.amount.toString() / 1000000000}</TableCell>
                     <TableCell>
                       {getISTDate(data.timestamp.toString())}
                     </TableCell>
@@ -151,7 +151,7 @@ const index = () => {
               {query === 'cashback' &&
                 cashbackData?.map((data: any) => (
                   <TableRow>
-                    <TableCell>{data.amount.toString()}</TableCell>
+                    <TableCell>{data.amount.toString() / 1000000000}</TableCell>
                     <TableCell>
                       {getISTDate(data.timestamp.toString())}
                     </TableCell>

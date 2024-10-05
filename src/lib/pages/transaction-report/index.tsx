@@ -50,9 +50,9 @@ const DepositReport = () => {
                 {userData['transactions'].map((transaction: any) => (
                   <TableRow>
                     <TableCell>
-                      {transaction.transactionType.toString() === 1
-                        ? 'Withdrawal'
-                        : 'Deposit'}
+                      {transaction['transactionType'].toString() === '1'
+                        ? 'Deposit'
+                        : 'Withdrawal'}
                     </TableCell>
                     <TableCell>
                       {formatIncome(transaction.amount.toString())}
