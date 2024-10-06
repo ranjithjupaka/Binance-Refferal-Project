@@ -313,7 +313,7 @@ const index = () => {
             </Card>
             <Card>
               <CardHeader>
-                <h2 className='text-xl font-bold'>Royality Balance</h2>
+                <h2 className='text-xl font-bold'>Reward Balance</h2>
               </CardHeader>
               <CardContent>
                 <div className='text-xl font-semibold'>
