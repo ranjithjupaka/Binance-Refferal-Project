@@ -385,7 +385,7 @@ const index = () => {
         </Card>
         <Card>
           <CardHeader>
-            <h2 className='text-xl font-bold'>Total Stakes</h2>
+            <h2 className='text-xl font-bold'>Total Deposits</h2>
           </CardHeader>
           <CardContent>
             <div className='text-xl font-semibold'>

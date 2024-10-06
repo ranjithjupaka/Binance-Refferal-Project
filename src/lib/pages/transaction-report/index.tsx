@@ -56,7 +56,7 @@ const DepositReport = () => {
                     <TableCell>
                       {transaction['transactionType'].toString() === '1'
                         ? 'Withdrawal'
-                        : 'Staked'}
+                        : 'Deposit'}
                     </TableCell>
                     <TableCell>
                       {formatIncome(transaction.amount.toString())}
