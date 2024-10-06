@@ -67,8 +67,8 @@ const index = () => {
                 <TableRow>
                   <TableHead>Level</TableHead>
                   <TableHead>Team</TableHead>
-                  <TableHead>Income</TableHead>
-                  <TableHead>Business</TableHead>
+                  <TableHead>Income (in POL)</TableHead>
+                  <TableHead>Business (in POL)</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

@@ -18,6 +18,8 @@ const index = () => {
   const PUBLIC_URL = 'http://localhost:5173'
   const [ReDepositAmount, setReDepositAmount] = useState(0)
   const [WithdrawAmount, setWithdrawAmount] = useState(0)
+  const [ContractBalWithdrawAmount, setContractBalWithdrawAmount] = useState(0)
+  const [newOwner, setNewOwner] = useState('')
   const { contract } = useContract(contract_address, CONTRACT_ABI)
   const address = useAddress()
   const [url, setUrl] = useState('')
@@ -35,10 +37,22 @@ const index = () => {
   } = useContractWrite(contract, 'deposit')
 
   const {
+    mutateAsync: setOwner,
+    isLoading: issetOwnerLoading,
+    error: setOwnerError,
+  } = useContractWrite(contract, 'setOwner')
+
+  const {
     mutateAsync: withdraw,
     isLoading: isWithdrawLoading,
     error: WithdrawError,
   } = useContractWrite(contract, 'withdraw')
+
+  const {
+    mutateAsync: contractWithdraw,
+    isLoading: iscontractWithdrawLoading,
+    error: contractWithdrawError,
+  } = useContractWrite(contract, 'withdrawContractBalance')
 
   const {
     mutateAsync: claimROI,
@@ -70,6 +84,12 @@ const index = () => {
     contractBalError,
     iscontractBalLoading
   )
+
+  const {
+    data: totalUsers,
+    isLoading: istotalUsersLoading,
+    error: totalUsersError,
+  } = useContractRead(contract, 'getTotalUsers')
 
   const navigate = useNavigate()
   const { userData, stakerBusinessData } = useAuth()
@@ -104,6 +124,26 @@ const index = () => {
     }
   }
 
+  const handleSetOwner = async (e: any) => {
+    e.preventDefault()
+    try {
+      if (address) {
+        await setOwner({
+          args: [newOwner],
+        })
+
+        if (!setOwnerError && !issetOwnerLoading) {
+          toast.success('Set Owner Successful')
+        }
+      }
+    } catch (err) {
+      console.log('err', err)
+      const errmsg = err as string
+      console.log(errmsg.toString())
+      toast.error('Set Owner Failed')
+    }
+  }
+
   const handleWithdraw = async (e: any) => {
     e.preventDefault()
     try {
@@ -115,6 +155,34 @@ const index = () => {
 
         if (!WithdrawError && !isWithdrawLoading) {
           toast.success('Withdraw Successful')
+        }
+      }
+    } catch (err) {
+      console.log('err', err)
+      console.log('error', DepositError)
+
+      const errmsg = err as string
+      console.log(errmsg, 'errmsg')
+
+      if (errmsg.toString().includes('Insufficient user balance')) {
+        toast.error('Insufficient user balance')
+      } else {
+        toast.error('Withdraw Failed')
+      }
+    }
+  }
+
+  const handleContractWithdraw = async (e: any) => {
+    e.preventDefault()
+    try {
+      const val = ContractBalWithdrawAmount * 1000000000
+      if (address) {
+        await contractWithdraw({
+          args: [address, val.toString()],
+        })
+
+        if (!contractWithdrawError && !iscontractWithdrawLoading) {
+          toast.success('Contract Withdraw Successful')
         }
       }
     } catch (err) {
@@ -181,7 +249,7 @@ const index = () => {
   return (
     <main className='container mx-auto px-4 py-8 sm:px-6 lg:px-8'>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center'>
-        <Card className=''>
+        <Card>
           <CardHeader>
             <h2 className='text-xl font-bold'>
               My Address {address === adminAddress ? '(Admin)' : ''}
@@ -214,12 +282,60 @@ const index = () => {
           <>
             <Card>
               <CardHeader>
+                <h2 className='text-xl font-bold'>Total Users</h2>
+              </CardHeader>
+              <CardContent>
+                <div className='text-xl font-semibold'>
+                  {totalUsers && totalUsers.toString()}
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
                 <h2 className='text-xl font-bold'>Contract Balance</h2>
               </CardHeader>
               <CardContent>
                 <div className='text-xl font-semibold'>
                   POL {contractBal && formatIncome(contractBal.toString())}
                 </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <h2 className='text-xl font-bold'>Withdraw Contract Balance</h2>
+              </CardHeader>
+              <CardContent>
+                <Input
+                  placeholder='Withdraw Amount'
+                  onChange={(e) =>
+                    setContractBalWithdrawAmount(Number(e.target.value))
+                  }
+                  className='placeholder:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-violet-600'
+                />
+                <Button
+                  className='font-dance mt-2 bg-violet-600'
+                  onClick={handleContractWithdraw}
+                >
+                  {iscontractWithdrawLoading ? 'Withdrawing...' : 'Withdraw'}
+                </Button>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <h2 className='text-xl font-bold'>Set New Owner</h2>
+              </CardHeader>
+              <CardContent>
+                <Input
+                  placeholder='New Owner Address'
+                  onChange={(e) => setNewOwner(e.target.value)}
+                  className='placeholder:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-violet-600'
+                />
+                <Button
+                  className='font-dance mt-2 bg-violet-600'
+                  onClick={handleSetOwner}
+                >
+                  {issetOwnerLoading ? 'changing owner...' : 'change owner'}
+                </Button>
               </CardContent>
             </Card>
           </>
@@ -273,11 +389,14 @@ const index = () => {
               POL {formatIncome(userData['totalCashbackIncome'].toString())}
             </div>
             <div className='flex items-center justify-center gap-2'>
-              <Button className='font-dance mt-2' onClick={handleClaimROI}>
+              <Button
+                className='font-dance mt-2 bg-violet-600'
+                onClick={handleClaimROI}
+              >
                 {isclaimROILoading ? 'Claiming...' : 'Claim'}
               </Button>
               <Button
-                className='font-dance mt-2'
+                className='font-dance mt-2 bg-violet-600'
                 onClick={() => navigate('/income-report?q=cashback')}
               >
                 View Details
@@ -294,7 +413,7 @@ const index = () => {
               POL {formatIncome(userData['totalDirectIncome'].toString())}
             </div>
             <Button
-              className='font-dance mt-2'
+              className='font-dance mt-2 bg-violet-600'
               onClick={() => navigate('/income-report?q=direct')}
             >
               View Details
@@ -310,7 +429,7 @@ const index = () => {
               POL {formatIncome(userData['totalLevelIncome'].toString())}
             </div>
             <Button
-              className='font-dance mt-2'
+              className='font-dance mt-2 bg-violet-600'
               onClick={() => navigate('/income-report?q=level')}
             >
               View Details
@@ -327,7 +446,7 @@ const index = () => {
             </div>
 
             <Button
-              className='font-dance mt-2'
+              className='font-dance mt-2 bg-violet-600'
               onClick={() => navigate('/income-report?q=blr')}
             >
               View Details
@@ -343,7 +462,7 @@ const index = () => {
               POL {formatIncome(userData['totalRewardIncome'].toString())}
             </div>
             <Button
-              className='font-dance mt-2'
+              className='font-dance mt-2 bg-violet-600'
               onClick={() => navigate('/income-report?q=reward')}
             >
               View Details
@@ -358,22 +477,30 @@ const index = () => {
             <Input
               placeholder='Re-Deposit Amount'
               onChange={(e) => setReDepositAmount(Number(e.target.value))}
+              className='placeholder:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-violet-600'
             />
-            <Button className='font-dance mt-2' onClick={handleReDeposit}>
+            <Button
+              className='font-dance mt-2 bg-violet-600'
+              onClick={handleReDeposit}
+            >
               ReDeposit
             </Button>
           </CardContent>
         </Card>
         <Card>
           <CardHeader>
-            <h2 className='text-xl font-bold'>Withdraw</h2>
+            <h2 className='text-xl font-bold'>Withdraw Balance</h2>
           </CardHeader>
           <CardContent>
             <Input
               placeholder='Withdraw Amount'
               onChange={(e) => setWithdrawAmount(Number(e.target.value))}
+              className='placeholder:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-violet-600'
             />
-            <Button className='font-dance mt-2' onClick={handleWithdraw}>
+            <Button
+              className='font-dance mt-2 bg-violet-600'
+              onClick={handleWithdraw}
+            >
               {isWithdrawLoading ? 'Withdrawing...' : 'Withdraw'}
             </Button>
           </CardContent>

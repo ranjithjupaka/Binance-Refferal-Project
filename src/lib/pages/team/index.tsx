@@ -79,7 +79,7 @@ const index = (props: Props) => {
             <TableHeader>
               <TableRow>
                 <TableHead>Address</TableHead>
-                <TableHead>Package</TableHead>
+                <TableHead>Package (in POL)</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

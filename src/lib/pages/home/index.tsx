@@ -121,6 +121,7 @@ const Home = () => {
               type='number'
               placeholder='Enter the amount'
               onChange={(e) => setAmount(Number(e.target.value))}
+              className='placeholder:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-violet-600'
             />
           </div>
           <div className='grid gap-2'>
@@ -128,11 +129,16 @@ const Home = () => {
             <Input
               id='amount'
               placeholder='Enter Refaddress'
+              className='placeholder:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-violet-600'
               value={ref_address}
               readOnly
             />
           </div>
-          <Button type='submit' className='w-full' onClick={handleStake}>
+          <Button
+            type='submit'
+            className='w-full bg-violet-600 hover:bg-violet-600'
+            onClick={handleStake}
+          >
             {isDepositLoading ? 'Stacking...' : 'Stake'}
           </Button>
         </form>
