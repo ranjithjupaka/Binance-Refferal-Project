@@ -292,11 +292,44 @@ const index = () => {
             </Card>
             <Card>
               <CardHeader>
-                <h2 className='text-xl font-bold'>Contract Balance</h2>
+                <h2 className='text-xl font-bold'>Total Balance</h2>
               </CardHeader>
               <CardContent>
                 <div className='text-xl font-semibold'>
                   POL {contractBal && formatIncome(contractBal.toString())}
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <h2 className='text-xl font-bold'>Contract Balance</h2>
+              </CardHeader>
+              <CardContent>
+                <div className='text-xl font-semibold'>
+                  POL{' '}
+                  {contractBal && formatIncome(contractBal.toString() * 0.81)}
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <h2 className='text-xl font-bold'>Royality Balance</h2>
+              </CardHeader>
+              <CardContent>
+                <div className='text-xl font-semibold'>
+                  POL{' '}
+                  {contractBal && formatIncome(contractBal.toString() * 0.01)}
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <h2 className='text-xl font-bold'>Level Balance</h2>
+              </CardHeader>
+              <CardContent>
+                <div className='text-xl font-semibold'>
+                  POL{' '}
+                  {contractBal && formatIncome(contractBal.toString() * 0.18)}
                 </div>
               </CardContent>
             </Card>
